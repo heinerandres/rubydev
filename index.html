@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html class="scroll-smooth scroll-pt-20" lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Portafolio</title>
+        <!-- Tailwind CSS v3 CDN -->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Public_Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <style>
+            .verTrabajos:hover{
+                background: linear-gradient(135deg,#100b60 0%,  #467aea 100%)
+            }
+            .signature-gradient{
+                background: linear-gradient(135deg,#100b60 0%,  #467aea 100%)
+            }
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Firefox */
+            .no-scrollbar {
+                scrollbar-width: none;
+            }
+
+            /* IE y Edge antiguos */
+            .no-scrollbar {
+                -ms-overflow-style: none;
+            }
+            .bg-brand-radial {
+                background: 
+                radial-gradient(ellipse at 45% 60%, 
+                #0052FF -250%, 
+                rgba(0, 0, 0, 1) 80%
+                );
+            }
+            .slideRight {
+                opacity: 0;
+                transform: translateX(-40px);
+                animation: slideDown 1.2s ease forwards;
+            }
+
+            @keyframes slideRight {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .slideDown {
+                opacity: 0;
+                transform: translateY(-40px);
+                animation: slideDown 1.2s ease forwards;
+            }
+
+            @keyframes slideDown {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .slideUp {
+                opacity: 0;
+                transform: translateY(40px);
+                animation: slideDown 1.2s ease forwards;
+            }
+
+            @keyframes slideUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            /* slideDown Scroll */
+            .slideUpScroll {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 1.2s ease;
+            }
+
+            .slideUpScroll.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .slideRightScroll {
+                opacity: 0;
+                transform: translateX(-40px);
+                transition: all 1.2s ease;
+            }
+
+            .slideRightScroll.show {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            /* STARS */
+            .space {
+                position: relative;
+                background: #020617;
+                overflow: hidden;
+                border: gray;
+            }
+            .space:hover {
+                border: 1px solid #0236a5;
+            }
+
+            .star {
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: #60a5fa;
+                border-radius: 50%;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+                /* aparecen en hover */
+            .space:hover .star {
+                opacity: 1;
+                box-shadow: 0 0 6px #60a5fa;
+            }
+            .card {
+                background: radial-gradient(circle, #0b1f3a, #020617);
+                border-radius: 12px;
+                transition: transform 0.1s ease;
+                transform-style: preserve-3d;
+            }
+
+            .card::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                filter: blur(100px);
+                background: radial-gradient(
+                    circle at var(--x) var(--y),
+                    #0052FF,
+                    transparent 30%
+                    
+                );
+
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                }
+
+                /* aparece en hover */
+            .card:hover::before {
+            opacity: 1;
+            }
+            .nav-link{
+                position: relative;
+                
+            }
+
+            .nav-link::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 2px;
+                background: #0052FF;
+
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-link.active::after {
+                transform: scaleX(1);
+            }
+            
+        </style>
+    </head>
+    <script>
+        tailwind.config = {
+        theme: {
+          extend: {
+            animation:{
+                scroll: "scroll 70s linear infinite",
+            },
+            keyframes: {
+                scroll: {
+                    "0%": { transform: "translateX(0)"},
+                    "100%": { transform: "translateX(-50%)"},
+                }
+            },
+            "colors": {
+                    "primary": "#0052FF",
+                    "primary-hover": "#467aea",
+                    "secundary": "#0052FF",
+                    "on-nav": "#0c1322",
+                    "on-secundary-title": "#175e46",
+                    "on-div": "#1f2e50",
+                    "shadowgray": "#98979D",
+                    "gradient-secundary": "#100b60"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Public Sans"],
+                    "label": ["Public Sans"]
+            }
+          },
+        },
+      }
+      
+    
+    </script>
+
+    <body class="[--nav:80px]">
+        <!-- NAV -->
+        <nav class="hidden md:block bg-black fixed top-0 w-full shadow-sm z-50">
+            <div class="px-[15%] flex justify-between items-center w-full px-8 h-20">
+                <a href="#" class="flex items-center cursor-pointer">
+                    <img class="w-[100px] h-[250px] object-contain" src="./img/logo.png">
+                </a>
+                <div class="ms:flex items-center space-x-8 font-['Manrope'] font-medium tracking-tight">
+                    <a href="#" class="sm:text-base xl:text-lg 2xl:text-xl text-white nav-link active">Inicio</a>
+                    <a href="#nosotros" class="sm:text-base xl:text-lg 2xl:text-xl text-white nav-link">Nosotros</a>
+                    <a href="#proyectos" class="sm:text-base xl:text-lg 2xl:text-xl text-white nav-link">Proyectos</a>
+                    <a href="#contacto" class="sm:text-base xl:text-lg 2xl:text-xl text-white nav-link">Contacto</a>
+                </div>
+                <div class="flex gap-2">
+                    <a href="" target="_blank">
+                        <button class="py-2 px-4 rounded text-white signature-gradient">Iniciar un Proyecto</button>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- INICIO -->
+         <div class="flex h-screen bg-brand-radial">
+            <div class="flex-1 flex-col flex justify-center items-center">
+                <div class="flex flex-col h-[10%]">
+                </div>
+                <div class="flex flex-col h-[75%] w-[50%]">
+                    <div class="h-[15%]">
+                        <h1 class="text-center font-bold text-6xl text-secundary slideRight">Agencia Web en Costa Rica</h4>
+                    </div>
+                    <div class="flex justify-center h-[15%]">
+                        <h3 class="w-[60%] text-center text-gray-400 text-base slideDown"><span class="text-white">RubyDevelopment</span> es una agencia especializada en diseño web, social media, community management y estrategia digital. Creamos experiencias online que posicionan, comunican y convierten.</h1>
+                    </div>
+                    <div class="flex justify-center h-[13%]">
+                        <h3 class="w-[60%] text-center text-gray-400 text-base slideUp">Diseñamos sitios <span class="text-white">rápidos, seguros</span> y gestionamos tu marca para generar <span class="text-white">resultados reales</span> y crecimiento sostenido.</h3>
+                    </div>
+                    <div class="flex gap-10 justify-center h-[10%] slideRight">
+                        <a>
+                            <button class="py-3 px-4 rounded-2xl text-white signature-gradient text-gray-400">Iniciar un Proyecto</button>
+                        </a>
+                        <a href="#proyectos">
+                            <button class="bg-transparent py-3 px-5 rounded-2xl text-gray-400 border border-secundary hover:text-gray-300">
+                                Ver Trabajos
+                            </button>
+                        </a>
+                    </div>
+                    <div class="flex justify-center h-[5%]">
+                        <p class="text-sm text-center text-gray-400 slideRight">Consulta sin costo adicional</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <section id="nosotros" class=" bg-brand-radial h-auto sm:h-[calc(100vh-var(--nav))]">
+            <div class="flex flex-col w-full h-full">
+                <div class="flex items-center justify-center h-[10%]">
+                    <p class="text-xs h-fit border p-1 border-gray-400 text-gray-400">CONFIANZA COMPROBADA</p>
+                </div>
+                <div class="flex flex-col h-[15%] slideUpScroll">
+                    <div class="h-[70%]">
+                        <h1 class="text-center font-bold text-6xl text-white">Casos de éxito y experiencia</h1>
+                    </div>
+                    <div class="flex justify-center items-center h-[20%]">
+                        <p class="text-gray-400">Compañías y emprendedores que pusieron su confianza en RubyDev.</p>
+                    </div>
+                </div>
+                <div class="flex justify-center h-[30%]">
+                    <div class="relative flex h-full w-[70%] overflow-hidden 
+                    [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                        
+                        <div class="flex justify-center items-center w-max animate-scroll">
+                            <div class="flex shrink-0">
+                                <img src="./img/gutis.jpg" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/seidor.jfif" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/citi.jpg" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/dlmv.jpg" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/popular.png" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/ccss.png" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/cne.jfif" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/bn.png" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/ins.jfif" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                
+                            </div>
+                            <div class="flex shrink-0">
+                                <img src="./img/gutis.jpg" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/seidor.jfif" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/citi.jpg" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/dlmv.jpg" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/popular.png" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/ccss.png" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/cne.jfif" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/bn.png" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                <img src="./img/ins.jfif" class="w-[200px] h-[100px] object-cover mx-2 rounded-xl" />
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center h-[42%]">
+                    <div class="flex gap-10 w-[50%] h-[95%]">
+                        <div class="flex w-1/2">
+                            <div class="flex w-[65%] justify-center items-center bg-black/40 rounded-xl slideUpScroll">
+                                <div class="w-[70%] h-[80%]">
+                                    <p class="text-white">"Un trabajo excelente con la web de mi negocio. Lograron una página optimizada, atractiva y enfocada. Se nota su experiencia y compromiso en cada detalle."</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center w-[35%] slideUpScroll">
+                                <div class="w-[80%] h-[40%]">
+                                    <img class="w-full h-full rounded-xl" src="./img/dlmv.jpg"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex w-1/2">
+                            <div class="flex w-[65%] justify-center items-center bg-black/40 rounded-xl slideUpScroll">
+                                <div class="w-[70%] h-[80%]">
+                                    <p class="text-white">"Trabajar con él fue una excelente decisión. Entendieron perfectamente lo que necesitábamos y lograron una web moderna, rápida y alineada con nuestra imagen. Destacamos su profesionalismo y compromiso en cada etapa del proyecto."</p>
+                                </div>
+                            </div>
+                            <div class="w-[35%] border border-red-500">
+                                <div class="w-[90%] h-[40%] border border-red-500">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section class="bg-brand-radial h-auto sm:h-[calc(80vh-var(--nav))]">
+            <div class="flex justify-center items-center h-full w-full">
+                <div class="flex flex-col h-[70%] w-[60%]">
+                    <div class="h-[40%]">
+                        <h1 class="text-white text-4xl font-bold">Servicios de Diseño Web. <span class="text-cyan-500">Un sistema</span></h1>
+                        <h1 class="text-4xl font-bold pt-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-300">pensado para generar resultados reales.</h1>
+                        <p class="text-gray-400 w-[60%] pt-4">Hacemos webs "bonitas" y creamos activos digitales que convierten visitantes en clientes reales para tu negocio.</p>
+                    </div>
+                    <div class="flex gap-2 h-[50%]">
+                        <div id="space" class="flex flex-col w-[33%] border border-gray-400 rounded-2xl cursor-pointer bg-black/40 space card">
+                            <div class="flex items-center h-[40%] pl-8">
+                                <div class="flex justify-center items-center h-[60%] w-[18%] bg-black/50 rounded-xl">
+                                    <i class="text-3xl text-white fa fa-compass"></i>
+                                </div>
+                            </div>
+                            <div class="h-[20%] pl-8">
+                                <h3 class="text-white font-bold">Conversión como norte</h3>
+                            </div>
+                            <div class="h-[40%] px-8">
+                                <p class="text-gray-400 text-sm">Estructura y UX diseñados para generar resultados reales: más consultas, más ventas, más impacto.</p>
+                            </div>
+                        </div>
+                        <div id="space" class="flex flex-col w-[33%] border border-gray-400 rounded-2xl cursor-pointer bg-black/40 space card">
+                            <div class="flex items-center h-[40%] pl-8">
+                                <div class="flex justify-center items-center h-[60%] w-[18%] bg-black/50 rounded-xl">
+                                    <i class="text-3xl text-white fa fa-compass"></i>
+                                </div>
+                            </div>
+                            <div class="h-[20%] pl-8">
+                                <h3 class="text-white font-bold">Conversión como norte</h3>
+                            </div>
+                            <div class="h-[40%] px-8">
+                                <p class="text-gray-400 text-sm">Estructura y UX diseñados para generar resultados reales: más consultas, más ventas, más impacto.</p>
+                            </div>
+                        </div>
+                        <div id="space" class="flex flex-col w-[33%] border border-gray-400 rounded-2xl cursor-pointer bg-black/40 space card">
+                            <div class="flex items-center h-[40%] pl-8">
+                                <div class="flex justify-center items-center h-[60%] w-[18%] bg-black/50 rounded-xl">
+                                    <i class="text-3xl text-white fa fa-compass"></i>
+                                </div>
+                            </div>
+                            <div class="h-[20%] pl-8">
+                                <h3 class="text-white font-bold">Conversión como norte</h3>
+                            </div>
+                            <div class="h-[40%] px-8">
+                                <p class="text-gray-400 text-sm">Estructura y UX diseñados para generar resultados reales: más consultas, más ventas, más impacto.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="proyectos" class="bg-brand-radial h-auto sm:h-[calc(100vh-var(--nav))]">
+            <div class="relative flex justify-center items-center h-full w-full">
+                <button onclick="scrollIzq()" class="absolute left-14 top-[55%] -translate-y-1/2 w-[5%] h-[20%]">
+                    <i class="text-white fa-solid fa-chevron-left"></i>
+                </button>
+                <button onclick="scrollDer()" class="absolute right-14 top-[55%] -translate-y-1/2 w-[5%] h-[20%]">
+                    <i class="text-white fa-solid fa-chevron-right"></i>
+                </button>
+                <div class="flex flex-col h-[90%] w-[80%]">
+                    <div class="h-[10%]">
+                        <div class="flex items-center h-full w-full">
+                            <h2 class="text-white text-3xl font-bold">Titulo de ejemplo para los proyectos</h2>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center h-[18%]">
+                        <div class="flex items-center justify-center gap-5 w-[35%] h-[80%]">
+                            
+                            <div onclick="mostrar('landing')" class="border border-gray-400 py-2 px-2 text-sm cursor-pointer">
+                                <p class="text-gray-400">LANDING PAGE</p>
+                            </div>
+                            <div onclick="mostrar('muestras')"  class="border border-gray-400 py-2 px-2 text-sm cursor-pointer">
+                                <p class="text-gray-400">PÁGINAS DE MUESTRA</p>
+                            </div>
+                            <div onclick="mostrar('ecommerce')"  class="border border-gray-400 py-2 px-2 text-sm cursor-pointer">
+                                <p class="text-gray-400">ECOMMERCE</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center h-[72%]">
+                        <!-- LANDING PAGE -->
+                        <div id="landing" class="gap-14 proyectos flex w-[98%] h-[95%] overflow-y-auto scroll-smooth no-scrollbar">
+                            <div class="flex-shrink-0 h-full w-[400px] group cursor-pointer border border-gray-400 rounded">
+                                    <div class="h-[65%] overflow-hidden">
+                                        <img src="./img/rest.PNG" class="w-full h-full opacity-70 transition duration-300 hover:scale-110 hover:opacity-100"/>
+                                    </div>
+                                    <div class="h-[35%]">
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <h2 class="w-[90%] font-bold text-white">Página de muestra para Restaurantes</h2>
+                                        </div>
+                                        <div class="flex justify-center h-[25%]">
+                                            <p class="w-[90%] text-xs text-gray-400">Ecommerce de muestra hecho por nosotros, administra clientes, muestra productos, detalles y los agrega al carrito</p>
+                                        </div>
+                                        <div class="flex justify-center items-center h-[25%]">
+                                            <div class="flex gap-2 w-[90%]">
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <p class="w-[90%] text-primary text-base group-hover:text-primary-hover">Ver Proyecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 h-full w-[400px] group cursor-pointer border border-gray-400 rounded">
+                                    <div class="h-[65%] overflow-hidden">
+                                        <img src="./img/hotel.PNG" class="w-full h-full opacity-70 transition duration-300 hover:scale-110 hover:opacity-100"/>
+                                    </div>
+                                    <div class="h-[35%]">
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <h2 class="w-[90%] font-bold text-white">Página de muestra para Hoteles</h2>
+                                        </div>
+                                        <div class="flex justify-center h-[25%]">
+                                            <p class="w-[90%] text-xs text-gray-400">Ecommerce de muestra hecho por nosotros, administra clientes, muestra productos, detalles y los agrega al carrito</p>
+                                        </div>
+                                        <div class="flex justify-center items-center h-[25%]">
+                                            <div class="flex gap-2 w-[90%]">
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <p class="w-[90%] text-primary text-base group-hover:text-primary-hover">Ver Proyecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 h-full w-[400px] group cursor-pointer border border-gray-400 rounded">
+                                    <div class="h-[65%] overflow-hidden">
+                                        <img src="./img/arquitecto.PNG" class="w-full h-full opacity-70 transition duration-300 hover:scale-105 hover:opacity-100"/>
+                                    </div>
+                                    <div class="h-[35%]">
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <h2 class="w-[90%] font-bold text-white">Amazon Web Page</h2>
+                                        </div>
+                                        <div class="flex justify-center h-[25%]">
+                                            <p class="w-[90%] text-xs text-gray-400">Ecommerce de muestra hecho por nosotros, administra clientes, muestra productos, detalles y los agrega al carrito</p>
+                                        </div>
+                                        <div class="flex justify-center items-center h-[25%]">
+                                            <div class="flex gap-2 w-[90%]">
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <p class="w-[90%] text-primary text-base group-hover:text-primary-hover">Ver Proyecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 h-full w-[400px] group cursor-pointer border border-gray-400 rounded">
+                                    <div class="h-[65%] overflow-hidden">
+                                        <img src="./img/cafeteria.PNG" class="w-full h-full opacity-70 transition duration-300 hover:scale-105 hover:opacity-100"/>
+                                    </div>
+                                    <div class="h-[35%]">
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <h2 class="w-[90%] font-bold text-white">Amazon Web Page</h2>
+                                        </div>
+                                        <div class="flex justify-center h-[25%]">
+                                            <p class="w-[90%] text-xs text-gray-400">Ecommerce de muestra hecho por nosotros, administra clientes, muestra productos, detalles y los agrega al carrito</p>
+                                        </div>
+                                        <div class="flex justify-center items-center h-[25%]">
+                                            <div class="flex gap-2 w-[90%]">
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <p class="w-[90%] text-primary text-base group-hover:text-primary-hover">Ver Proyecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 h-full w-[400px] group cursor-pointer border border-gray-400 rounded">
+                                    <div class="h-[65%] overflow-hidden">
+                                        <img src="./img/tiendas.PNG" class="w-full h-full opacity-70 transition duration-300 hover:scale-105 hover:opacity-100"/>
+                                    </div>
+                                    <div class="h-[35%]">
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <h2 class="w-[90%] font-bold text-white">Amazon Web Page</h2>
+                                        </div>
+                                        <div class="flex justify-center h-[25%]">
+                                            <p class="w-[90%] text-xs text-gray-400">Ecommerce de muestra hecho por nosotros, administra clientes, muestra productos, detalles y los agrega al carrito</p>
+                                        </div>
+                                        <div class="flex justify-center items-center h-[25%]">
+                                            <div class="flex gap-2 w-[90%]">
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <p class="w-[90%] text-primary text-base group-hover:text-primary-hover">Ver Proyecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- PAGINAS DE MUESTRA -->
+                        <div id="muestras" class="border border-red-500 proyectos hidden flex w-[98%] h-[95%] overflow-y-auto scroll-smooth no-scrollbar">
+                            <p class="text-white">muestra</p>
+                        </div>
+                        <!-- ECOMMERCE -->
+                        <div id="ecommerce" class="border border-red-500 proyectos hidden flex w-[98%] h-[95%] overflow-y-auto scroll-smooth no-scrollbar">
+                            <div class="flex gap-5 w-full h-full">
+                                <div class="flex-shrink-0 h-full w-[400px] group cursor-pointer border border-gray-400 rounded">
+                                    <div class="h-[65%] overflow-hidden">
+                                        <img src="./img/amazon.png" class="w-full h-full opacity-70 transition duration-300 hover:scale-105 hover:opacity-100"/>
+                                    </div>
+                                    <div class="h-[35%]">
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <h2 class="w-[90%] font-bold text-white">Amazon Web Page</h2>
+                                        </div>
+                                        <div class="flex justify-center h-[25%]">
+                                            <p class="w-[90%] text-xs text-gray-400">Ecommerce de muestra hecho por nosotros, administra clientes, muestra productos, detalles y los agrega al carrito</p>
+                                        </div>
+                                        <div class="flex justify-center items-center h-[25%]">
+                                            <div class="flex gap-2 w-[90%]">
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                                <p class="w-fit px-[8px] py-[2px] border border-gray-400 text-gray-400">React</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-center h-[25%]">
+                                            <p class="w-[90%] text-primary text-base group-hover:text-primary-hover">Ver Proyecto</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <section id="contacto" class="bg-brand-radial h-auto sm:h-[calc(100vh-var(--nav))]">
+            <div class="flex justify-center items-center h-full w-full">
+                <div class="flex flex-col h-[90%] w-[40%]">
+                    <div class="h-[15%] slideRightScroll">
+                        <div class="flex items-center justify-center w-[100%] h-[65%]">
+                             <h2 class="text-white text-3xl font-bold">Hablemos por WhatsApp</h2>
+                        </div>
+                        <div class="flex justify-center h-[35%]">
+                            <p class="text-gray-400">Completá el formulario y te respondemos con una propuesta adaptada a tus objetivos.</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center h-[85%] bg-black/60">
+                        <div class="h-[90%] w-[90%]">
+                            <form class="w-full h-full">
+                                <div class="flex flex-col w-full h-full">
+                                    <div class="flex h-1/4">
+                                        <div class="flex flex-col flex-1 slideRightScroll">
+                                            <label class="mb-4 text-base text-white">
+                                                Nombre
+                                            </label>
+                                            <input class="w-[95%] bg-transparent placeholder:text-slate-400 rounded-lg text-slate-700 text-base border-[0.5px] border-slate-200 px-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary/10" placeholder="Escriba su nombre"/>
+                                        </div>
+                                        <div class="flex flex-col flex-1 slideRightScroll">
+                                            <label class="mb-4 text-base text-white">
+                                                Apellido
+                                            </label>
+                                            <input class="w-[95%] bg-transparent placeholder:text-slate-400 rounded-lg text-slate-700 text-base border-[0.5px] border-slate-200 px-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary/10" placeholder="Escriba su apellido"/>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col h-1/4 slideRightScroll">
+                                        <label class="mb-4 text-base text-white">
+                                            Tipo de Proyecto
+                                        </label>
+                                        <select class="w-[95%] bg-transparent placeholder:text-slate-400 text-slate-700 rounded-lg text-base border-[0.5px] border-slate-200 px-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary/10" placeholder="Escriba su apellido">
+                                            <option class="bg-black text-white" value="">Seleccione una</option>
+                                            <option class="bg-black text-white" value="landing">Landing Page</option>
+                                            <option class="bg-black text-white" value="institucional">Sitio Web Institucional</option>
+                                            <option class="bg-black text-white" value="ecommerce">Ecommerce</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col h-1/4 slideRightScroll">
+                                        <label class="mb-4 text-base text-white">
+                                                Detalles del Proyecto
+                                            </label>
+                                            <textarea class="w-[95%] h-[70%] bg-transparent placeholder:text-slate-400 rounded-lg text-slate-700 text-base border-[0.5px] border-slate-200 px-3 py-2 transition duration-300 ease focus:outline-none focus:border-primary/10" placeholder="Escriba los detalles de su proyecto"></textarea>
+                                    </div>
+                                    <div class="flex justify-center items-center h-1/4 slideRightScroll">
+                                        <a href="https://wa.me/50689252748" target="_blank"
+                                            class="h-[35%] text-gray-400 px-6 py-2.5 font-bold signature-gradient rounded">
+                                            <i class="fa-brands fa-whatsapp text-ternary"></i>
+                                            <span class="text-gray-400">Enviar por WhatsApp</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <div class="fixed bottom-5 right-5 z-50 flex items-center justify-center">
+
+            <!-- Onda 1 -->
+            <span class="absolute w-16 h-16 border-2 border-green-500 rounded-full animate-ping opacity-75 [animation-duration:2s]"></span>
+
+            <!-- Botón -->
+            <a href="https://wa.me/506XXXXXXXX"
+                target="_blank"
+                class="relative w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg text-2xl">
+
+                <i class="fab fa-whatsapp"></i>
+            </a>
+
+        </div>
+        <script src="app.js"></script>
+    </body>
+
+
+</html>
